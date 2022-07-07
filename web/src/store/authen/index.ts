@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 // services
-import { authenApi } from "./service";
+import { authenApi, tryLoginApi } from "./service";
 
 // types
 import { IAuthen } from "./type";
@@ -36,6 +36,19 @@ const { reducer, actions } = createSlice({
       const { data } = action?.payload as any;
       state.loading = false;
       state.errorMessage = data?.message;
+    });
+
+    // TRY LOGIN
+    builder.addCase(tryLoginApi.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(tryLoginApi.fulfilled, (state, action) => {
+      const { userInfo } = action?.payload as any;
+      state.loading = false;
+      state.userInfo = userInfo;
+    });
+    builder.addCase(tryLoginApi.rejected, (state, action) => {
+      state.loading = false;
     });
   },
 });

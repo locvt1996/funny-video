@@ -13,3 +13,16 @@ export const authenApi = createAsyncThunk(
     }
   }
 );
+
+export const tryLoginApi = createAsyncThunk(
+  "auth/try-login",
+  async (req: {}, thunkApi) => {
+    try {
+      const response = await AppService.post("auth/try-login", req);
+
+      return response.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error?.response);
+    }
+  }
+);

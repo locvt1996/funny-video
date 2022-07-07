@@ -1,12 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import { ObjectId } from "mongoose";
 import jwt from "jsonwebtoken";
-
 import { UserDoc } from "../user/type";
 import User from "../user/userModel";
 
 import { catchAsync, TimeOneDate } from "../../helpers/utils";
 import AppError from "../../helpers/appError";
+
+const { promisify } = require("util");
 
 const signJwt = (id: ObjectId) => {
   return jwt.sign({ id }, process.env.JWT_SECRET as string, {
@@ -59,5 +60,32 @@ export const authentication = catchAsync(
     });
 
     sendTokenToCliend(res, user);
+  }
+);
+
+export const tryLogin = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    let token;
+    const { authorization } = req.headers;
+
+    if (authorization && authorization.startsWith("Bearer")) {
+      token = authorization.split(" ")[1];
+    }
+
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    const user = (await User.findById(decoded.id)) as UserDoc;
+
+    if (!user) {
+      next(new AppError(`The user belonging this token no exits`, 401));
+    }
+
+    res.status(200).json({
+      status: "success",
+      token,
+      userInfo: {
+        email: user.email,
+        id: user._id,
+      },
+    });
   }
 );

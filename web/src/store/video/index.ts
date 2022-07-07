@@ -4,11 +4,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import { IVideo } from "./type";
 
 // services
-import { updateVideo } from "./service";
+import { updateVideoApi, getVideosApi } from "./service";
 
 const initialState: IVideo = {
   loadingUploadVideo: false,
   uploadVideoMessage: "",
+  loadingListVideo: false,
+  videos: [],
 };
 
 const { reducer, actions } = createSlice({
@@ -23,14 +25,29 @@ const { reducer, actions } = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(updateVideo.pending, (state) => {
+    // UPLOAD VIDEO
+    builder.addCase(updateVideoApi.pending, (state) => {
       state.uploadVideoMessage = "";
     });
-    builder.addCase(updateVideo.fulfilled, (state) => {
+    builder.addCase(updateVideoApi.fulfilled, (state) => {
       state.uploadVideoMessage = "Video update success";
     });
-    builder.addCase(updateVideo.rejected, (state) => {
+    builder.addCase(updateVideoApi.rejected, (state) => {
       state.uploadVideoMessage = "Video update fail";
+    });
+
+    // GET LIST VIDEO
+    builder.addCase(getVideosApi.pending, (state) => {
+      state.loadingListVideo = true;
+    });
+    builder.addCase(getVideosApi.fulfilled, (state, action) => {
+      const { videos } = action?.payload as any;
+      state.loadingListVideo = false;
+      state.videos = videos;
+    });
+    builder.addCase(getVideosApi.rejected, (state) => {
+      state.loadingListVideo = false;
+      state.videos = [];
     });
   },
 });

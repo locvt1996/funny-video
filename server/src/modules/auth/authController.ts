@@ -7,8 +7,6 @@ import User from "../user/userModel";
 import { catchAsync, TimeOneDate } from "../../helpers/utils";
 import AppError from "../../helpers/appError";
 
-const { promisify } = require("util");
-
 const signJwt = (id: ObjectId) => {
   return jwt.sign({ id }, process.env.JWT_SECRET as string, {
     expiresIn: process.env.JWT_EXPIRES_IN,
@@ -54,10 +52,11 @@ export const authentication = catchAsync(
       return next(new AppError("Incorrect email or password!", 401));
     }
 
-    user = await User.create({
-      email,
-      password,
-    });
+    if (!user)
+      user = await User.create({
+        email,
+        password,
+      });
 
     sendTokenToCliend(res, user);
   }
@@ -65,23 +64,10 @@ export const authentication = catchAsync(
 
 export const tryLogin = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    let token;
-    const { authorization } = req.headers;
-
-    if (authorization && authorization.startsWith("Bearer")) {
-      token = authorization.split(" ")[1];
-    }
-
-    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-    const user = (await User.findById(decoded.id)) as UserDoc;
-
-    if (!user) {
-      next(new AppError(`The user belonging this token no exits`, 401));
-    }
+    const { user } = req.body;
 
     res.status(200).json({
       status: "success",
-      token,
       userInfo: {
         email: user.email,
         id: user._id,

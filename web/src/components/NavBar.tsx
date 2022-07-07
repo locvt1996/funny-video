@@ -22,7 +22,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
         <Link to="/" title="funny-video">
           <img src={logo} alt="funny-video" width="60" />
         </Link>
-        <h1 className="text-6xl ml-8">Funny Video</h1>
+        <h1 className="text-5xl ml-8">Funny Video</h1>
       </div>
       <div className="w-3/5">
         {userInfo ? <UserInfo userInfo={userInfo} /> : <AuthenForm />}

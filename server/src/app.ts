@@ -10,6 +10,7 @@ import cors from "cors";
 
 // router
 import authRouter from "./modules/auth/authRouter";
+import videoRouter from "./modules/video/videoRouter";
 
 // middleware
 import errorMiddleware from "./middlewares/errorMiddleware";
@@ -45,6 +46,7 @@ app.use(
 );
 
 app.use(`${process.env.API_VERSION}/auth`, authRouter);
+app.use(`${process.env.API_VERSION}/video`, videoRouter);
 
 // Error Middleware
 app.use(errorMiddleware);

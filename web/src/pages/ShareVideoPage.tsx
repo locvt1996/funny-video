@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, memo } from "react";
 import { useDispatch, batch } from "react-redux";
 
 // services
 import { fetchInfoYoutubeVideo } from "../api/youtubeService";
-import { updateVideo } from "../store/video/service";
+import { updateVideoApi } from "../store/video/service";
 
 // actions
 import { setMessageUploadVideo, setLoadingUploadVideo } from "../store/video";
@@ -37,10 +37,10 @@ const ShareVideoPage: React.FC<ShareVideoPageProps> = ({}) => {
     }
 
     dispatch(
-      updateVideo({
+      updateVideoApi({
         videoId,
         title: videoInfo.title,
-        desc: videoInfo.description,
+        description: videoInfo.description,
       })
     );
   }, [shareVideoLink, dispatch]);
@@ -80,4 +80,4 @@ const ShareVideoPage: React.FC<ShareVideoPageProps> = ({}) => {
   );
 };
 
-export default ShareVideoPage;
+export default memo(ShareVideoPage);

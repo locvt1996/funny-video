@@ -7,6 +7,7 @@ import { IUserInfo } from "../store/authen/type";
 
 // actions
 import { logoutAction } from "../store/authen";
+import { useHistory } from "react-router-dom";
 
 interface UserInfoProps {
   userInfo: IUserInfo;
@@ -14,9 +15,11 @@ interface UserInfoProps {
 
 const AuthenForm: React.FC<UserInfoProps> = ({ userInfo }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleLogout = useCallback(() => {
     dispatch(logoutAction());
+    history.push("/");
   }, [dispatch]);
 
   return (

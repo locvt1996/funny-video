@@ -7,7 +7,7 @@ import { authenApi, tryLoginApi } from "./service";
 import { IAuthen } from "./type";
 
 // helpers
-import { setCookie } from "../../helpers/cookie";
+import { setCookie, deleteCookie } from "../../helpers/cookie";
 
 const initialState: IAuthen = {
   loading: false,
@@ -18,7 +18,12 @@ const initialState: IAuthen = {
 const { reducer, actions } = createSlice({
   name: "authen",
   initialState,
-  reducers: {},
+  reducers: {
+    logoutAction: (state) => {
+      state.userInfo = null;
+      deleteCookie("token");
+    },
+  },
   extraReducers: (builder) => {
     // AUTHENTICATION
     builder.addCase(authenApi.pending, (state) => {
@@ -52,5 +57,9 @@ const { reducer, actions } = createSlice({
     });
   },
 });
+
+const { logoutAction } = actions;
+
+export { logoutAction };
 
 export default reducer;

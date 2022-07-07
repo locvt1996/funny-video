@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 
 import NavBar from "./components/NavBar";
 import HomePage from "./pages/HomePage";
+import ShareVideoPage from "./pages/ShareVideoPage";
 
 // service
 import { tryLoginApi } from "./store/authen/service";
@@ -18,6 +19,7 @@ function App() {
   return (
     <div className="container px-5 py-10 mx-auto text-center lg:px-40">
       <NavBar />
+
       <Route
         exact
         path="/"
@@ -25,7 +27,7 @@ function App() {
           return <HomePage {...reactRouterProps} />;
         }}
       />
-      {/* <Route path="/register" component={SignUpPage} /> */}
+      <Route path="/share-video" exact component={ShareVideoPage} />
     </div>
   );
 }

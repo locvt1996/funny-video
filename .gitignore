@@ -9,4 +9,10 @@
 
 # package-log
 /server/package-lock.json
+/server/yarn.lock
 /web/package-lock.json
+/web/yarn.lock
+
+# env
+/server/config.env
+/web/.env

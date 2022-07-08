@@ -25,7 +25,7 @@ const handleCastErrorDB = (error: AppErrorInterface) => {
 };
 
 const handleDuplicateFieldDB = (error: AppErrorInterface) => {
-  const message = `Duplicate field value: ${Object.keys(error.keyValue)?.join(
+  const message = `Item existed: ${Object.keys(error.keyValue)?.join(
     ","
   )}. Please use another value!`;
   console.log(new AppError(message, 400));

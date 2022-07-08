@@ -33,8 +33,10 @@ const { reducer, actions } = createSlice({
       state.uploadVideoMessage = "Video update success";
       state.loadingUploadVideo = false;
     });
-    builder.addCase(updateVideoApi.rejected, (state) => {
-      state.uploadVideoMessage = "Video update fail";
+    builder.addCase(updateVideoApi.rejected, (state, action) => {
+      const { data } = action?.payload as any;
+
+      state.uploadVideoMessage = data?.message || "Video update fail";
       state.loadingUploadVideo = false;
     });
 
@@ -43,7 +45,7 @@ const { reducer, actions } = createSlice({
       state.loadingListVideo = true;
     });
     builder.addCase(getVideosApi.fulfilled, (state, action) => {
-      const { videos } = action?.payload as any;
+      const { videos } = action?.payload;
       state.loadingListVideo = false;
       state.videos = videos;
     });

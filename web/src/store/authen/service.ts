@@ -1,9 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import AppService from "../../api/appService";
 
-export const authenApi = createAsyncThunk(
+// types
+import { IAuthenApiReturn, IAuthenApiPostData } from "./type";
+
+export const authenApi = createAsyncThunk<IAuthenApiReturn, IAuthenApiPostData>(
   "auth/authentication",
-  async (req: { email: string; password: string }, thunkApi) => {
+  async (req, thunkApi) => {
     try {
       const response = await AppService.post("auth/authentication", req);
 
@@ -14,11 +17,11 @@ export const authenApi = createAsyncThunk(
   }
 );
 
-export const tryLoginApi = createAsyncThunk(
+export const tryLoginApi = createAsyncThunk<IAuthenApiReturn>(
   "auth/try-login",
-  async (req: {}, thunkApi) => {
+  async (_, thunkApi) => {
     try {
-      const response = await AppService.post("auth/try-login", req);
+      const response = await AppService.post("auth/try-login", {});
 
       return response.data;
     } catch (error: any) {

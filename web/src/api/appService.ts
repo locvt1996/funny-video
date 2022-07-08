@@ -1,4 +1,4 @@
-import Axios from "axios";
+import Axios, { AxiosRequestConfig } from "axios";
 
 // helpers
 import { getCookie } from "../helpers/cookie";
@@ -9,9 +9,13 @@ const AppService = Axios.create({
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json",
-    Authorization: `Bearer ${getCookie("token")}`,
   },
   withCredentials: false,
+});
+
+AppService.interceptors.request.use((request: any) => {
+  request.headers["Authorization"] = `Bearer ${getCookie("token")}`;
+  return request;
 });
 
 export default AppService;

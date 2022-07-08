@@ -31,7 +31,7 @@ const { reducer, actions } = createSlice({
       state.errorMessage = "";
     });
     builder.addCase(authenApi.fulfilled, (state, action) => {
-      const { userInfo, token } = action?.payload as any;
+      const { userInfo, token } = action?.payload;
       state.loading = false;
       state.errorMessage = "";
       state.userInfo = userInfo;

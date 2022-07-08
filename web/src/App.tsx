@@ -15,7 +15,7 @@ function App() {
   const dispath = useDispatch();
 
   useEffect(() => {
-    dispath(tryLoginApi({}));
+    dispath(tryLoginApi());
   }, [dispath]);
 
   return (

@@ -1,23 +1,27 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import AppService from "../../api/appService";
 
-export const updateVideoApi = createAsyncThunk(
-  "video/upload",
-  async (
-    req: { videoId: string; title: string; description: string },
-    thunkApi
-  ) => {
-    try {
-      const response = await AppService.post("video", req);
+// types
+import {
+  IUpdateVideoApiReturn,
+  IUpdateVideoApiPostData,
+  IGetVideoApiReturn,
+} from "./type";
 
-      return response.data;
-    } catch (error: any) {
-      return thunkApi.rejectWithValue(error?.response);
-    }
+export const updateVideoApi = createAsyncThunk<
+  IUpdateVideoApiReturn,
+  IUpdateVideoApiPostData
+>("video/upload", async (req, thunkApi) => {
+  try {
+    const response = await AppService.post("video", req);
+
+    return response.data;
+  } catch (error: any) {
+    return thunkApi.rejectWithValue(error?.response);
   }
-);
+});
 
-export const getVideosApi = createAsyncThunk(
+export const getVideosApi = createAsyncThunk<IGetVideoApiReturn>(
   "video/getList",
   async (_, thunkApi) => {
     try {

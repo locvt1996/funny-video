@@ -1,6 +1,12 @@
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
+
+// services
 import { authenApi } from "../store/authen/service";
+
+// selectors
+import { useAppSelector } from "../hooks/useAppSelector";
+import { getLoadingAuthen } from "../store/authen/selector";
 
 interface AuthenFormProps {}
 
@@ -15,6 +21,8 @@ const AuthenForm: React.FC<AuthenFormProps> = ({}) => {
     email: "",
     password: "",
   });
+
+  const loading = useAppSelector(getLoadingAuthen);
 
   const handleOnChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +39,7 @@ const AuthenForm: React.FC<AuthenFormProps> = ({}) => {
   }, [valueForm, dispatch]);
 
   return (
-    <div className="flex justify-end">
+    <div className={`flex justify-end ${loading && "loading"}`}>
       <input
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-1/4 mr-4"
         id="email"

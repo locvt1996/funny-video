@@ -23,7 +23,7 @@ const AuthenForm: React.FC<UserInfoProps> = ({ userInfo }) => {
   }, [dispatch]);
 
   return (
-    <div className="flex justify-end items-center">
+    <div className="flex justify-end items-center" data-testid="user-info">
       <div className="mr-8">
         <span>{userInfo?.email}</span>
       </div>

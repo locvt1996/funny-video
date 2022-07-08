@@ -31,9 +31,11 @@ const { reducer, actions } = createSlice({
     });
     builder.addCase(updateVideoApi.fulfilled, (state) => {
       state.uploadVideoMessage = "Video update success";
+      state.loadingUploadVideo = false;
     });
     builder.addCase(updateVideoApi.rejected, (state) => {
       state.uploadVideoMessage = "Video update fail";
+      state.loadingUploadVideo = false;
     });
 
     // GET LIST VIDEO

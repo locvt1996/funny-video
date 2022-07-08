@@ -48,7 +48,7 @@ const ShareVideoPage: React.FC<ShareVideoPageProps> = ({}) => {
   return (
     <div data-testid="share-video-page">
       <div className="max-w-screen-md rounded overflow-hidden shadow-lg mx-auto text-center mt-20">
-        <div className="px-6 py-4 text-center">
+        <div className={`px-6 py-4 text-center ${loading && "loading"}`}>
           <div className="mb-10">Share a Youtube movie</div>
 
           <div className="flex items-center justify-center">

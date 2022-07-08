@@ -12,7 +12,10 @@ interface ListVideoProps {
 
 const ListVideo: React.FC<ListVideoProps> = ({ videos }) => {
   return (
-    <div className="container mx-auto text-center lg:px-40">
+    <div
+      className="container mx-auto text-center lg:px-40"
+      data-testid="list-video"
+    >
       {videos.map((item: IVideoItem) => (
         <VideoItem key={item.videoId} {...item} />
       ))}

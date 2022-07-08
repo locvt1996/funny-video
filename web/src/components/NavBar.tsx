@@ -17,7 +17,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
   const userInfo = useAppSelector(getUserInfo);
 
   return (
-    <nav className="container flex items-center mb-16">
+    <nav className="container flex items-center mb-16" data-testid="nav-bar">
       <div className="w-2/5 flex items-center">
         <Link to="/" title="funny-video">
           <img src={logo} alt="funny-video" width="60" />

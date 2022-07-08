@@ -10,7 +10,7 @@ const VideoItem: React.FC<IVideoItem> = ({
   uploadBy,
 }) => {
   return (
-    <div className="flex">
+    <div className="flex mt-10" data-testid="video-item">
       <div>
         <iframe
           width={320}
@@ -23,7 +23,9 @@ const VideoItem: React.FC<IVideoItem> = ({
       <div className="ml-8 text-left w-3/5">
         <div className="truncate">{title}</div>
         <div className="my-4">Share by: {uploadBy}</div>
-        <div className="truncate whitespace-normal">{description}</div>
+        <div className="truncate whitespace-normal line-clamp">
+          {description}
+        </div>
       </div>
     </div>
   );
